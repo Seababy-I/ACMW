@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Internship and Placement AMA | ACM-W Manipal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Stalinist+One&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fragment+Mono:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+@font-face {
+      font-family: 'Porter Sans Block';
+      src: url('https://assets.codepen.io/4927073/PorterSansBlock.woff2') format('woff2'),
+           url('https://assets.codepen.io/4927073/PorterSansBlock.woff') format('woff');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #05070f;
+      color: #fff;
+      overflow-x: hidden;
+      font-family: 'Fragment Mono', sans-serif;
+    }
+
+    .dot-grid {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    #dotCanvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .navbar,
+    .content {
+      position: relative;
+      z-index: 10;
+      pointer-events: auto;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 60px;
+    }
+
+    .logo {
+      height: 50px;
+    }
+
+    .logo img {
+      height: 100%;
+      width: auto;
+    }
+
+    .navbar nav {
+      display: flex;
+      gap: 30px;
+    }
+
+    .navbar nav a {
+      text-decoration: none;
+      color: #bbb;
+      font-size: 20px;
+      transition: color 0.3s;
+    }
+
+    .navbar nav a.active {
+      color: #5a8fff;
+    }
+
+    .navbar nav a:hover {
+      color: #fff;
+    }
+
+    
+
+    .event-header {
+      text-align: center;
+      padding: 60px 60px 40px;
+    }
+
+    .event-title {
+      font-size: 56px;
+      font-weight: 900;
+      font-family: 'Stalinist One', sans-serif;
+      letter-spacing: 4px;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      position: relative;
+      display: inline-block;
+    }
+
+    .event-title::before {
+      content: 'Internship and Placement AMA';
+      position: absolute;
+      left: 0;
+      top: 0;
+      
+    }
+
+    .photo-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      padding: 40px 60px;
+      max-width: 900px;
+      margin: 0 auto;
+      position: relative;
+  z-index: 30;
+    }
+
+    .photo-item {
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s;
+    }
+
+    .photo-item:hover {
+      transform: scale(1.05);
+    }
+
+    .photo-item img {
+      width: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .wave-divider {
+  width: 100%;
+  height: 150px;
+  background: #1d4c92;   /* solid fill */
+  clip-path: polygon(0 45%, 100% 0, 100% 100%, 0 100%);
+  margin-top: 60px;
+}
+
+
+    .description-section {
+      color: #000;
+      padding: 60px 60px 80px;
+    }
+
+    .description-content {
+      max-width: 1100px;
+      margin: 80px auto;
+      padding: 40px;
+      /* Glass effect */
+      background: rgba(10, 15, 30, 0.85); /* blocks dots */
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+
+      /* Text */
+      color: #fff;
+      line-height: 1.8;
+      font-size: 16px;
+
+      /* Layering */
+      position: relative;
+      z-index: 20;
+    }
+
+    .description-content p {
+      font-size: 30px;
+      line-height: 1.8;
+      margin-bottom: 15px;
+    }
+
+    .description-content ul {
+      margin: 20px 0;
+      padding-left: 30px;
+    }
+
+    .description-content li {
+      font-size: 26px;
+      margin-bottom: 10px;
+      line-height: 1.6;
+    }
+
+        /* ================= NAVBAR ================= */
+
+.navbar-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 164px;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+.navbar-hidden {
+  transform: translateY(-100%);
+  opacity: 0;
+}
+
+/* LOGO */
+.nav-logo {
+  padding-left: 48px;
+  flex-shrink: 0;
+}
+
+.nav-logo img {
+  width: 164px;
+  height: 164px;
+  object-fit: contain;
+}
+
+/* NAV PILL */
+.nav-pill {
+  position: absolute;
+  left: 240px;
+  top: 78px;
+  width: 1125px;
+  height: 64px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(150, 128, 128, 0.13);
+  border: 1px solid rgba(185, 176, 176, 0.46);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(2.5px);
+  border-radius: 32px;
+}
+
+/* LINKS */
+.nav-links {
+  display: flex;
+  gap: 48px;
+  list-style: none;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+}
+
+.nav-links li {
+  position: relative;
+  padding: 8px 24px;
+  cursor: pointer;
+}
+
+.nav-links li::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(177, 170, 177, 0.126);
+  border: 1px solid rgba(185, 176, 176, 0.46);
+  border-radius: 32px;
+  transform: scale(0);
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.nav-links li:hover::before {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.nav-links span {
+  position: relative;
+  z-index: 1;
+  color: white;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.nav-links li:hover span {
+  color: #99399E;
+  transform: scale(1.1);
+}
+
+.nav-links .active span {
+  color: #5a8fff;
+}
+
+.nav-spacer {
+  height: 180px; /* must cover pill + blur */
+}
+
+
+.page-content {
+  position: relative;
+  z-index: 20;
+  isolation: isolate;
+}
+
+    @media (max-width: 768px) {
+      .navbar {
+        padding: 15px 30px;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+
+      .event-header {
+        padding: 40px 30px 20px;
+      }
+
+      .event-title {
+        font-size: 36px;
+      }
+
+      .photo-gallery {
+        padding: 30px 30px;
+        grid-template-columns: 1fr;
+      }
+
+      .description-section {
+        padding: 40px 30px 60px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="nav-spacer"></div>
+
+<section class="dot-grid">
+  <canvas id="dotCanvas"></canvas>
+</section>
+
+<nav id="navbar" class="navbar-wrapper">
+  <!-- LOGO -->
+  <div class="nav-logo">
+    <img src="../images/logo-removebg-preview.png" alt="ACM-W Logo">
+  </div>
+
+  <!-- NAV PILL -->
+  <div class="nav-pill">
+    <ul class="nav-links">
+      <li><span>Home</span></li>
+      <li><span>About Us</span></li>
+      <li class="active"><span>Event</span></li>
+      <li><span>Gallery</span></li>
+      <li><span>Contact</span></li>
+    </ul>
+  </div>
+</nav>
+
+
+<main class="page-content">
+
+
+<div class="event-header">
+  <h1 class="event-title">Internship and Placement AMA</h1>
+</div>
+
+<section class="photo-gallery">
+  <div class="photo-item">
+    <img src="../images/internship-and-placement-ama.png" alt="Event Photo 1">
+  </div>
+</section>
+
+
+
+<section class="description-section">
+  <div class="description-content">
+<p>The event Internship and Placement AMA was hosted on Instagram Live on August 1st 2020. Participants joined us live on our Instagram page and had their queries about on- and off-campus placements and internships be cast away by Tanvi and Anisha. Tanvi Anand was an intern at Fractal Analytics and a researcher in the field of NLP. Anisha Pal was an AI Engineer, working on Deep Learning at Hyperverge at the time the event was held.</p>  </div>
+</section>
+
+<script>
+const canvas = document.getElementById("dotCanvas");
+const ctx = canvas.getContext("2d");
+
+const config = {
+  dotSize: 4,
+  gap: 25,
+  proximity: 150,
+  baseColor: { r: 39, g: 30, b: 55 }
+};
+
+let dots = [];
+let mouse = { x: -999, y: -999, prevX: -999, prevY: -999 };
+
+function resize() {
+  const dpr = window.devicePixelRatio || 1;
+  canvas.width = window.innerWidth * dpr;
+  canvas.height = window.innerHeight * dpr;
+  canvas.style.width = window.innerWidth + "px";
+  canvas.style.height = window.innerHeight + "px";
+  ctx.scale(dpr, dpr);
+
+  dots = [];
+  const cols = Math.ceil(window.innerWidth / (config.dotSize + config.gap));
+  const rows = Math.ceil(window.innerHeight / (config.gap + config.dotSize));
+
+  for (let row = 0; row < rows; row++) {
+    for (let col = 0; col < cols; col++) {
+      dots.push({
+        x: col * (config.dotSize + config.gap) + config.dotSize,
+        y: row * (config.dotSize + config.gap) + config.dotSize,
+        baseX: col * (config.dotSize + config.gap) + config.dotSize,
+        baseY: row * (config.dotSize + config.gap) + config.dotSize,
+        vx: 0,
+        vy: 0
+      });
+    }
+  }
+}
+
+function animate() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  dots.forEach(dot => {
+    const dx = dot.baseX - mouse.x;
+    const dy = dot.baseY - mouse.y;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+
+    const mouseDx = mouse.x - mouse.prevX;
+    const mouseDy = mouse.y - mouse.prevY;
+    const mouseSpeed = Math.sqrt(mouseDx * mouseDx + mouseDy * mouseDy);
+
+    if (dist < config.proximity && mouseSpeed > 2) {
+      const force = (1 - dist / config.proximity) * 0.5;
+      dot.vx += dx * force * 0.1;
+      dot.vy += dy * force * 0.1;
+    }
+
+    dot.vx *= 0.85;
+    dot.vy *= 0.85;
+    dot.x += dot.vx;
+    dot.y += dot.vy;
+
+    const returnDx = dot.baseX - dot.x;
+    const returnDy = dot.baseY - dot.y;
+    dot.x += returnDx * 0.08;
+    dot.y += returnDy * 0.08;
+
+    let alpha = 0.3;
+    if (dist < config.proximity) {
+      alpha = 0.3 + (1 - dist / config.proximity) * 0.7;
+    }
+
+const color = dist < config.proximity
+  ? { r: 28, g: 144, b: 206 } // #1C90CE
+  : config.baseColor;
+
+ctx.fillStyle = `rgba(${color.r}, ${color.g}, ${color.b}, ${alpha})`;    ctx.beginPath();
+    ctx.arc(dot.x, dot.y, config.dotSize / 2, 0, Math.PI * 2);
+    ctx.fill();
+  });
+
+  mouse.prevX = mouse.x;
+  mouse.prevY = mouse.y;
+
+  requestAnimationFrame(animate);
+}
+
+window.addEventListener("mousemove", (e) => {
+  mouse.x = e.clientX;
+  mouse.y = e.clientY;
+});
+
+canvas.addEventListener("click", (e) => {
+  const clickX = e.clientX;
+  const clickY = e.clientY;
+
+  dots.forEach(dot => {
+    const dx = dot.baseX - clickX;
+    const dy = dot.baseY - clickY;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+
+    if (dist < 250) {
+      const force = (1 - dist / 250) * 15;
+      dot.vx += (dx / dist) * force;
+      dot.vy += (dy / dist) * force;
+    }
+  });
+});
+
+window.addEventListener("resize", resize);
+
+resize();
+animate();
+</script>
+<script>
+  const navbar = document.getElementById("navbar");
+
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 500) {
+      navbar.classList.add("navbar-hidden");
+    } else {
+      navbar.classList.remove("navbar-hidden");
+    }
+  });
+</script>
+
+</body>
+</html>

@@ -1,5 +1,4 @@
 import React from 'react';
-import { Instagram, Linkedin, Mail } from 'lucide-react';
 
 export default function Footer() {
   return (
@@ -60,7 +59,7 @@ export default function Footer() {
                 rel="noreferrer"
                 className="hover:text-[#2B609E] transition-all flex items-center gap-2"
               >
-                <Instagram size={18} />
+                <span aria-hidden="true">IG</span>
                 <span className="text-xs font-bold tracking-widest uppercase">
                   Instagram
                 </span>
@@ -72,15 +71,15 @@ export default function Footer() {
                 rel="noreferrer"
                 className="hover:text-[#2B609E] transition-all flex items-center gap-2"
               >
-                <Linkedin size={18} />
+                <span aria-hidden="true">in</span>
                 <span className="text-xs font-bold tracking-widest uppercase">
                   LinkedIn
                 </span>
               </a>
             </div>
 
-            <div className="flex items-center gap-2 md:justify-end opacity-80 hover:opacity-100 transition-opacity">
-              <Mail size={18} className="text-[#2B609E]" />
+          <div className="flex items-center gap-2 md:justify-end opacity-80 hover:opacity-100 transition-opacity">
+              <span className="text-[#2B609E]" aria-hidden="true">@</span>
               <a
                 href="mailto:acmw.manipal@gmail.com"
                 className="text-gray-400 text-sm font-medium"

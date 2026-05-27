@@ -1,82 +1,32 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { NavLink } from 'react-router-dom';
+
+const links = [
+  { to: '/', label: 'Home' },
+  { to: '/events', label: 'Events' },
+  { to: '/gallery', label: 'Gallery' },
+  { to: '/faq', label: 'FAQ' },
+  { to: '/contact', label: 'Contact' },
+];
 
 export default function Navbar() {
-  const [isVisible, setIsVisible] = useState(true);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      // Logic to hide/show navbar based on scroll position
-      if (window.scrollY > 500) {
-        setIsVisible(false);
-      } else {
-        setIsVisible(true);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const navLinks = ["Home", "About Us", "Event", "Gallery", "Contact"];
-
   return (
-    <nav 
-      className={`fixed top-0 left-0 w-full z-[100] flex items-center h-[164px] transition-all duration-500 ease-in-out ${
-        isVisible ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'
-      }`}
-    >
-      
-      {/* 1. THE LOGO */}
-      <div className="pl-12 flex-shrink-0">
-        <img 
-          /* FIX: Using BASE_URL ensures the logo is found at /gallery/acmw.png 
-             on GitHub and /acmw.png on localhost 
-          */
-          src={`${import.meta.env.BASE_URL}acmw.png`} 
-          alt="ACM-W Logo" 
-          className="w-[164px] h-[164px] object-contain"
-        />
-      </div>
+    <header className="site-header">
+      <NavLink to="/" className="site-brand" aria-label="ACM-W Manipal home">
+        ACM-W <span>Manipal</span>
+      </NavLink>
 
-      {/* 2. THE NAV PILL */}
-      <div 
-        className="absolute flex items-center justify-center"
-        style={{
-          boxSizing: 'border-box',
-          width: '1125px',
-          height: '64px',
-          left: '240px',
-          top: '78px',
-          background: 'rgba(150, 128, 128, 0.13)',
-          border: '1px solid rgba(185, 176, 176, 0.46)',
-          boxShadow: '0px 8px 24px rgba(0, 0, 0, 0.25)',
-          backdropFilter: 'blur(2.5px)',
-          borderRadius: '32px'
-        }}
-      >
-        <ul className="flex gap-12 text-white font-semibold text-lg tracking-widest uppercase">
-          {navLinks.map((link) => (
-            <li 
-              key={link} 
-              className="group relative px-6 py-2 flex items-center justify-center"
-            >
-              {/* Hover Background Bubble */}
-              <div 
-                className="absolute inset-0 scale-0 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-300 ease-out"
-                style={{
-                  background: 'rgba(177, 170, 177, 0.126)',
-                  border: '1px solid rgba(185, 176, 176, 0.46)',
-                  borderRadius: '32px'
-                }}
-              ></div>
-              
-              <span className="relative z-10 cursor-pointer transition-all duration-300 group-hover:text-[#99399E] group-hover:scale-110 block">
-                {link}
-              </span>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </nav>
+      <nav className="site-nav" aria-label="Main navigation">
+        {links.map((link) => (
+          <NavLink
+            key={link.to}
+            to={link.to}
+            className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}
+          >
+            {link.label}
+          </NavLink>
+        ))}
+      </nav>
+    </header>
   );
 }
